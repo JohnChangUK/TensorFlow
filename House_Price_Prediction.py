@@ -41,3 +41,12 @@ test_house_price_norm = normalize(test_house_price)
 tf_house_size = tf.placeholder("float", name="house_size")
 tf_price = tf.placeholder("float", name="price")
 
+# Define the variables holding the size_factor and price we set during training
+# We initialize them to some random values based on the normal distribution
+tf_size_factor = tf.Variable(np.random.randn(), name="size_factor")
+tf_price_offset = tf.Variable(np.random.rand(), name="price_offset")
+
+tf_price_pred = tf.add(tf.multiply(tf_size_factor, tf_house_size), tf_price_offset)
+
+# 3. Define the Loss Function (how much error) - Mean Squared Error
+tf_cost = tf.reduce_sum(tf.pow(tf_price_pred-tf_price, 2))/(2*num_train_samples)
