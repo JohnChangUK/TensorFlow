@@ -16,3 +16,28 @@ plt.plot(house_size, house_price, "bx") # bx = blue x
 plt.ylabel("Price")
 plt.xlabel("Size")
 plt.show()
+
+def normalize(Array):
+    return (Array - array.mean()) / array.std()
+
+# Define number of training samples, 0.7 = 70%. We can take the first 70% since the values are randomized
+num_train_samples = math.floor(num_house * 0.7)
+
+# Define training Data
+train_house_size = np.asarray(house_size[:num_train_samples])
+train_price = np.asanyarray(house_price[:num_train_samples:])
+
+train_house_size_norm = normalize(train_house_size)
+train_price_norm - normalize(train_price)
+
+# Define test Data
+test_house_size = np.array(house_size[num_train_samples:])
+test_house_price = np.array(house_price[num_train_samples:])
+
+test_house_size_norm = normalize(test_house_size)
+test_house_price_norm = normalize(test_house_price)
+
+# Set up TensorFlow placeholders that get updated as we descent down the gradient
+tf_house_size = tf.placeholder("float", name="house_size")
+tf_price = tf.placeholder("float", name="price")
+
