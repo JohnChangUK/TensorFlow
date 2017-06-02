@@ -46,7 +46,16 @@ tf_price = tf.placeholder("float", name="price")
 tf_size_factor = tf.Variable(np.random.randn(), name="size_factor")
 tf_price_offset = tf.Variable(np.random.rand(), name="price_offset")
 
+# 2. Define the operations for the predicting values - predicted price = (size_factor * house_size) + price_offset
+# Notice, the user of the TensorFlow Add and Multiply functions. These add the operations to the computation graph,
+# AND the TensorFlow methods understand how to deal with Tensors. Therefore do not try to use numpy or library methods.
 tf_price_pred = tf.add(tf.multiply(tf_size_factor, tf_house_size), tf_price_offset)
 
 # 3. Define the Loss Function (how much error) - Mean Squared Error
 tf_cost = tf.reduce_sum(tf.pow(tf_price_pred-tf_price, 2))/(2*num_train_samples)
+
+# Optimizer learning eate. The size of the steps down the Gradtient
+learning_rate = 0.1
+
+# 4. Define a Gradient Descent Optimizer that will minimize the loss defined in the operation "cost"
+optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(tf_cost)
